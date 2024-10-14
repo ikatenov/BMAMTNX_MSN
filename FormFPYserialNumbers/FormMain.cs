@@ -19,11 +19,17 @@ namespace BMAMTNX
 
             bool[] arr = new bool[NumMeters];
 
+            arr[0] = true;
+            arr[1] = true;
+            arr[2] = true;
+            arr[3] = true;
+            arr[4] = true;
+
             MetersFpyForm = new FormFPY();
 
             MetersFpyForm.DataEntered += FormFPY_DataEntered;
 
-            MetersFpyForm.Show("SCAN METER POSITION =>  SCAN METER BARCODE", NumMeters, arr);
+            MetersFpyForm.Show(" SCAN METER POSITION => SCAN METER BARCODE", NumMeters, arr);
 
 
         }

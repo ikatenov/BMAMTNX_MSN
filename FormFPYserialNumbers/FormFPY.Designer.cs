@@ -28,27 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
+            textBoxPosition = new TextBox();
             panel1 = new Panel();
             iGrid1 = new TenTec.Windows.iGridLib.iGrid();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)iGrid1).BeginInit();
             SuspendLayout();
             // 
-            // textBox1
+            // textBoxPosition
             // 
-            textBox1.Location = new Point(90, 14);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(189, 23);
-            textBox1.TabIndex = 0;
-            textBox1.KeyUp += textBox1_KeyUp;
+            textBoxPosition.Location = new Point(145, 14);
+            textBoxPosition.Name = "textBoxPosition";
+            textBoxPosition.Size = new Size(189, 23);
+            textBoxPosition.TabIndex = 0;
+            textBoxPosition.TextAlign = HorizontalAlignment.Center;
+            textBoxPosition.KeyUp += textBox1_KeyUp;
             // 
             // panel1
             // 
             panel1.Controls.Add(iGrid1);
             panel1.Location = new Point(12, 41);
             panel1.Name = "panel1";
-            panel1.Size = new Size(359, 260);
+            panel1.Size = new Size(464, 300);
             panel1.TabIndex = 1;
             // 
             // iGrid1
@@ -57,21 +58,24 @@
             iGrid1.DefaultRow.Height = 21;
             iGrid1.DefaultRow.NormalCellHeight = 21;
             iGrid1.Dock = DockStyle.Fill;
+            iGrid1.EnsureVisibleAutoHScroll = false;
+            iGrid1.EnsureVisibleAutoVScroll = false;
             iGrid1.Location = new Point(0, 0);
             iGrid1.Margin = new Padding(2, 1, 2, 1);
             iGrid1.Name = "iGrid1";
-            iGrid1.Size = new Size(359, 260);
+            iGrid1.Size = new Size(464, 300);
             iGrid1.TabIndex = 1;
             // 
-            // Form1
+            // FormFPY
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(383, 313);
+            ClientSize = new Size(488, 370);
             Controls.Add(panel1);
-            Controls.Add(textBox1);
-            Name = "Form1";
+            Controls.Add(textBoxPosition);
+            Name = "FormFPY";
             Text = "Form1";
+            Load += FormFPY_Load;
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)iGrid1).EndInit();
             ResumeLayout(false);
@@ -80,7 +84,7 @@
 
         #endregion
 
-        private TextBox textBox1;
+        private TextBox textBoxPosition;
         private Panel panel1;
         private TenTec.Windows.iGridLib.iGrid iGrid1;
     }

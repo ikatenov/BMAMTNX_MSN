@@ -1,7 +1,14 @@
 using TenTec.Windows.iGridLib;
+using System.Linq;
+using System.Collections;
+using System;
+using System.Reflection;
+using System.Windows.Forms.Design.Behavior;
 
 namespace BMAMTNX
 {
+
+
     public partial class FormFPY : Form
     {
         private int numberMeters;
@@ -29,7 +36,7 @@ namespace BMAMTNX
         {
             InitializeComponent();
         }
-       
+
         public void Show(string title, int numMeters, bool[] enabledPositions)
         {
             this.Text = title;
@@ -37,7 +44,7 @@ namespace BMAMTNX
             numberMeters = numMeters;
 
             arr = new bool[numberMeters];
-        
+
             Array.Copy(enabledPositions, 0, arr, 0, arr.Length);
 
             InitializeGrid();
@@ -47,17 +54,27 @@ namespace BMAMTNX
 
         private void textBox1_KeyUp(object sender, KeyEventArgs e)
         {
-           // if enter found
+            if (e.KeyCode == Keys.Enter)
+            {
+                if( textBoxPosition.Text.StartsWith("AMT-") )
+                {
+                    // TODO   parse out the integer, which is the row position 
+                    // but subract one
+                    // example is AMT-1
+                    // so row 0  Serial Number column needs focus so serial number can get scanned in and stored.
 
-           // AMT-01 
+                    textBoxPosition.Enabled = false;
+                }
+                else // not a valid position label was scanned so start over
+                {
+                    textBoxPosition.Text = string.Empty;
+                }
 
-           // check if first 4 characters are AMT-
+            }
 
-           // if yes,  get integer and set focus to that serialNumber row if still still is needing serial number
-           // clear edit box to ""
-
-           
         }
+
+
 
         // need a capture function for when enter found scanning in serialNumber grid
         // so can put focus back to edit box if more to scan or close form and set event
@@ -65,7 +82,7 @@ namespace BMAMTNX
 
         private void InitializeGrid()
         {
-         
+
             iGrid1.BeginUpdate();
 
             int colWidth = COLUMN_WIDTH;
@@ -84,43 +101,87 @@ namespace BMAMTNX
             iGCol col;
             col = iGrid1.Cols.Add("position", "POSITION");
             col.CellStyle.ValueType = typeof(int);
+            col.CellStyle.Selectable = iGBool.False;
+
             col.CellStyle.TextAlign = iGContentAlignment.MiddleLeft;
-            
+
 
             col = iGrid1.Cols.Add("serialNumber", "SERIAL NUMBER");
             col.CellStyle.ValueType = typeof(string);
+            col.CellStyle.Selectable = iGBool.False;
             col.CellStyle.TextAlign = iGContentAlignment.MiddleRight;
-          
+
             col = iGrid1.Cols.Add("status", "STATUS");
             col.CellStyle.ValueType = typeof(string);
-            col.CellStyle.TextAlign = iGContentAlignment.MiddleRight;
-
-            int row = 0;
-
-            foreach(bool b in arr)
-            {
-                // set position value
-
-                if (b)
-                {
-                   
-                    // set row color red
-                    // set status value to "Missing SN"
-                }
-                else
-                {
-                    // set row color gray
-                    // set status value to "EMPTY"
-                }
-                row++;
-            }
+            col.CellStyle.Selectable = iGBool.False;
+            col.CellStyle.TextAlign = iGContentAlignment.MiddleCenter;
 
             iGrid1.Rows.Count = numberMeters;
 
+            // set up grid to match Amt meter front screen 
+            foreach (var (item, index) in arr.WithIndex())
+            {
+                iGrid1.CellValues[index, "position"] = index + 1;
+
+                if (item)
+                {   
+                    iGrid1.CellValues[index, "status"] = "MISSING SN";
+                }
+                else
+                {                  
+                    iGrid1.CellValues[index, "status"] = "EMPTY";
+
+                }
+            }
 
             iGrid1.EndUpdate();
 
         }
 
+        private void iGrid1_CellDynamicContents(object sender,
+iGCellDynamicContentsEventArgs e)
+        {
+
+            if( e.Text == "MISSING SN" )
+            {
+                iGrid1.Rows[e.RowIndex].CellStyle.BackColor = Color.Red;
+            }
+            else if (e.Text == "EMPTY")
+            {
+                iGrid1.Rows[e.RowIndex].CellStyle.BackColor = Color.Gray;
+            }
+
+            //int value = (int)iGrid1.CellValues[e.RowIndex, e.ColIndex];
+            //switch (value)
+            //{
+            //    case 1:
+            //        e.Text = "One";
+            //        break;
+            //    case 2:
+            //        e.Text = "Two";
+            //        break;
+            //    case 3:
+            //        e.Text = "Three";
+            //        break;
+            //}
+        }
+
+
+        private void FormFPY_Load(object sender, EventArgs e)
+        {
+            iGrid1.CellDynamicContents += iGrid1_CellDynamicContents;
+
+            textBoxPosition.Focus();
+        }
+    }
+
+    public static class extention
+    {
+        public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> source)
+        {
+            return source.Select((item, index) => (item, index));
+        }
     }
 }
+
+  
