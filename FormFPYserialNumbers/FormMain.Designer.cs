@@ -1,6 +1,6 @@
 ﻿namespace BMAMTNX
 {
-    partial class Form1
+    partial class FormMain
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,32 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            buttonShowDialog = new Button();
+            ButtonTest1 = new Button();
             SuspendLayout();
             // 
-            // buttonShowDialog
+            // ButtonTest1
             // 
-            buttonShowDialog.Location = new Point(223, 179);
-            buttonShowDialog.Name = "buttonShowDialog";
-            buttonShowDialog.Size = new Size(392, 46);
-            buttonShowDialog.TabIndex = 0;
-            buttonShowDialog.Text = "Show Dialog";
-            buttonShowDialog.UseVisualStyleBackColor = true;
-            buttonShowDialog.Click += buttonShowDialog_Click;
+            ButtonTest1.Location = new Point(75, 55);
+            ButtonTest1.Margin = new Padding(2, 1, 2, 1);
+            ButtonTest1.Name = "ButtonTest1";
+            ButtonTest1.Size = new Size(249, 30);
+            ButtonTest1.TabIndex = 0;
+            ButtonTest1.Text = "Enable Manual Scanning Serial Numbers";
+            ButtonTest1.UseVisualStyleBackColor = true;
+            ButtonTest1.Click += ButtonTest1_Click;
             // 
-            // Form1
+            // FormMain
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(buttonShowDialog);
-            Name = "Form1";
-            Text = "Form1";
+            ClientSize = new Size(431, 211);
+            Controls.Add(ButtonTest1);
+            Margin = new Padding(2, 1, 2, 1);
+            Name = "FormMain";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Main Form";
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Button buttonShowDialog;
+        private Button ButtonTest1;
     }
 }
