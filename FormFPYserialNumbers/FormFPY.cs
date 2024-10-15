@@ -144,40 +144,34 @@ namespace BMAMTNX
 
         }
 
-        private void iGrid1_CellDynamicContents(object sender,
-iGCellDynamicContentsEventArgs e)
-        {
-
-            if( e.Text == "MISSING SN" )
-            {
-                iGrid1.Rows[e.RowIndex].CellStyle.BackColor = Color.Red;
-            }
-            else if (e.Text == "EMPTY")
-            {
-                iGrid1.Rows[e.RowIndex].CellStyle.BackColor = Color.Gray;
-            }
-
-            //int value = (int)iGrid1.CellValues[e.RowIndex, e.ColIndex];
-            //switch (value)
-            //{
-            //    case 1:
-            //        e.Text = "One";
-            //        break;
-            //    case 2:
-            //        e.Text = "Two";
-            //        break;
-            //    case 3:
-            //        e.Text = "Three";
-            //        break;
-            //}
-        }
-
-
         private void FormFPY_Load(object sender, EventArgs e)
         {
-            iGrid1.CellDynamicContents += iGrid1_CellDynamicContents;
+            iGrid1.CellDynamicFormatting += iGrid1_CellDynamicFormatting;
+            iGrid1.AfterCommitEdit += iGrid1_AfterCommitEdit;
 
             textBoxPosition.Focus();
+        }
+
+        private void iGrid1_AfterCommitEdit(object sender, iGAfterCommitEditEventArgs e)
+        {
+            if (iGrid1.Cols[e.ColIndex].Key == "serialNumber")
+            {
+                iGrid1.CellValues[e.RowIndex, "status"] = string.IsNullOrWhiteSpace(e.NewText) ? "MISSING SN" : string.Empty;
+            }
+        }
+
+        private void iGrid1_CellDynamicFormatting(object sender, iGCellDynamicFormattingEventArgs e)
+        {
+            string status = (string)iGrid1.CellValues[e.RowIndex, "status"];
+
+            if (status == "MISSING SN")
+            {
+                e.BackColor = Color.Red;
+            }
+            else if (status == "EMPTY")
+            {
+                e.BackColor = Color.Gray;
+            }
         }
     }
 
