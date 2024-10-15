@@ -29,63 +29,92 @@
         private void InitializeComponent()
         {
             textBoxPosition = new TextBox();
-            panel1 = new Panel();
             iGrid1 = new TenTec.Windows.iGridLib.iGrid();
-            panel1.SuspendLayout();
+            tableLayoutPanelMain = new TableLayoutPanel();
+            tableLayoutPanelTextBox = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)iGrid1).BeginInit();
+            tableLayoutPanelMain.SuspendLayout();
+            tableLayoutPanelTextBox.SuspendLayout();
             SuspendLayout();
             // 
             // textBoxPosition
             // 
-            textBoxPosition.Location = new Point(145, 14);
+            textBoxPosition.Location = new Point(279, 6);
+            textBoxPosition.Margin = new Padding(6);
             textBoxPosition.Name = "textBoxPosition";
-            textBoxPosition.Size = new Size(189, 23);
+            textBoxPosition.Size = new Size(348, 39);
             textBoxPosition.TabIndex = 0;
             textBoxPosition.TextAlign = HorizontalAlignment.Center;
             textBoxPosition.KeyUp += textBox1_KeyUp;
             // 
-            // panel1
-            // 
-            panel1.Controls.Add(iGrid1);
-            panel1.Location = new Point(12, 41);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(464, 300);
-            panel1.TabIndex = 1;
-            // 
             // iGrid1
             // 
-            iGrid1.DefaultAutoGroupRow.Height = 21;
-            iGrid1.DefaultRow.Height = 21;
-            iGrid1.DefaultRow.NormalCellHeight = 21;
+            iGrid1.DefaultAutoGroupRow.Height = 38;
+            iGrid1.DefaultRow.Height = 38;
+            iGrid1.DefaultRow.NormalCellHeight = 38;
             iGrid1.Dock = DockStyle.Fill;
             iGrid1.EnsureVisibleAutoHScroll = false;
             iGrid1.EnsureVisibleAutoVScroll = false;
-            iGrid1.Location = new Point(0, 0);
-            iGrid1.Margin = new Padding(2, 1, 2, 1);
+            iGrid1.Header.Height = 35;
+            iGrid1.Location = new Point(4, 82);
+            iGrid1.Margin = new Padding(4, 2, 4, 2);
             iGrid1.Name = "iGrid1";
-            iGrid1.Size = new Size(464, 300);
+            iGrid1.Size = new Size(905, 705);
             iGrid1.TabIndex = 1;
+            // 
+            // tableLayoutPanelMain
+            // 
+            tableLayoutPanelMain.ColumnCount = 1;
+            tableLayoutPanelMain.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanelMain.Controls.Add(iGrid1, 0, 1);
+            tableLayoutPanelMain.Controls.Add(tableLayoutPanelTextBox, 0, 0);
+            tableLayoutPanelMain.Dock = DockStyle.Fill;
+            tableLayoutPanelMain.Location = new Point(0, 0);
+            tableLayoutPanelMain.Name = "tableLayoutPanelMain";
+            tableLayoutPanelMain.RowCount = 2;
+            tableLayoutPanelMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
+            tableLayoutPanelMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanelMain.Size = new Size(906, 789);
+            tableLayoutPanelMain.TabIndex = 2;
+            // 
+            // tableLayoutPanelTextBox
+            // 
+            tableLayoutPanelTextBox.ColumnCount = 3;
+            tableLayoutPanelTextBox.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanelTextBox.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanelTextBox.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanelTextBox.Controls.Add(textBoxPosition, 1, 0);
+            tableLayoutPanelTextBox.Dock = DockStyle.Fill;
+            tableLayoutPanelTextBox.Location = new Point(3, 3);
+            tableLayoutPanelTextBox.Name = "tableLayoutPanelTextBox";
+            tableLayoutPanelTextBox.RowCount = 1;
+            tableLayoutPanelTextBox.RowStyles.Add(new RowStyle());
+            tableLayoutPanelTextBox.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanelTextBox.Size = new Size(907, 74);
+            tableLayoutPanelTextBox.TabIndex = 2;
             // 
             // FormFPY
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(488, 370);
-            Controls.Add(panel1);
-            Controls.Add(textBoxPosition);
+            ClientSize = new Size(906, 789);
+            Controls.Add(tableLayoutPanelMain);
+            Margin = new Padding(6);
             Name = "FormFPY";
             Text = "Form1";
             Load += FormFPY_Load;
-            panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)iGrid1).EndInit();
+            tableLayoutPanelMain.ResumeLayout(false);
+            tableLayoutPanelTextBox.ResumeLayout(false);
+            tableLayoutPanelTextBox.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private TextBox textBoxPosition;
-        private Panel panel1;
         private TenTec.Windows.iGridLib.iGrid iGrid1;
+        private TableLayoutPanel tableLayoutPanelMain;
+        private TableLayoutPanel tableLayoutPanelTextBox;
     }
 }
