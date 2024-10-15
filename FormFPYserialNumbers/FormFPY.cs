@@ -54,14 +54,20 @@ namespace BMAMTNX
 
         private void textBox1_KeyUp(object sender, KeyEventArgs e)
         {
+            const string cRowPrefix = "AMT-";
+
             if (e.KeyCode == Keys.Enter)
             {
-                if( textBoxPosition.Text.StartsWith("AMT-") )
+                if( textBoxPosition.Text.StartsWith(cRowPrefix) )
                 {
-                    // TODO   parse out the integer, which is the row position 
-                    // but subract one
-                    // example is AMT-1
-                    // so row 0  Serial Number column needs focus so serial number can get scanned in and stored.
+                    string position = textBoxPosition.Text.Substring(cRowPrefix.Length);
+                    if (int.TryParse(position, out int rowIndex))
+                    {
+                        if (rowIndex >= 1 && rowIndex <= iGrid1.Rows.Count)
+                        {
+                            iGrid1.SetCurCell(rowIndex - 1, "serialNumber");
+                        }
+                    }
 
                     textBoxPosition.Enabled = false;
                 }
@@ -108,7 +114,7 @@ namespace BMAMTNX
 
             col = iGrid1.Cols.Add("serialNumber", "SERIAL NUMBER");
             col.CellStyle.ValueType = typeof(string);
-            col.CellStyle.Selectable = iGBool.False;
+            //col.CellStyle.Selectable = iGBool.False;
             col.CellStyle.TextAlign = iGContentAlignment.MiddleRight;
 
             col = iGrid1.Cols.Add("status", "STATUS");
