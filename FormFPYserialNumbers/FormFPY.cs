@@ -50,6 +50,8 @@ namespace BMAMTNX
             InitializeGrid();
 
             this.Show();
+
+            textBoxPosition.Focus();
         }
 
         private void textBox1_KeyUp(object sender, KeyEventArgs e)
@@ -115,7 +117,7 @@ namespace BMAMTNX
             col = iGrid1.Cols.Add("serialNumber", "SERIAL NUMBER");
             col.CellStyle.ValueType = typeof(string);
             //col.CellStyle.Selectable = iGBool.False;
-            col.CellStyle.TextAlign = iGContentAlignment.MiddleRight;
+            col.CellStyle.TextAlign = iGContentAlignment.MiddleCenter;
 
             col = iGrid1.Cols.Add("status", "STATUS");
             col.CellStyle.ValueType = typeof(string);
@@ -136,7 +138,6 @@ namespace BMAMTNX
                 else
                 {                  
                     iGrid1.CellValues[index, "status"] = "EMPTY";
-
                 }
             }
 
@@ -149,19 +150,27 @@ namespace BMAMTNX
             iGrid1.CellDynamicFormatting += iGrid1_CellDynamicFormatting;
             iGrid1.AfterCommitEdit += iGrid1_AfterCommitEdit;
 
-            textBoxPosition.Focus();
         }
 
         private void iGrid1_AfterCommitEdit(object sender, iGAfterCommitEditEventArgs e)
         {
             if (iGrid1.Cols[e.ColIndex].Key == "serialNumber")
             {
-                iGrid1.CellValues[e.RowIndex, "status"] = string.IsNullOrWhiteSpace(e.NewText) ? "MISSING SN" : string.Empty;
+                iGrid1.CellValues[e.RowIndex, "status"] = string.IsNullOrWhiteSpace(e.NewText) ? "MISSING SN" : "OK";
             }
+
+            textBoxPosition.Enabled = true;
         }
 
         private void iGrid1_CellDynamicFormatting(object sender, iGCellDynamicFormattingEventArgs e)
         {
+            iGCell curCell = iGrid1.CurCell;
+            if (curCell != null && curCell.RowIndex == e.RowIndex && curCell.ColIndex == e.ColIndex)
+            {
+                e.BackColor = Color.Yellow;
+                return;
+            }
+
             string status = (string)iGrid1.CellValues[e.RowIndex, "status"];
 
             if (status == "MISSING SN")
@@ -171,6 +180,10 @@ namespace BMAMTNX
             else if (status == "EMPTY")
             {
                 e.BackColor = Color.Gray;
+            }
+            else if (status == "OK")
+            {
+                e.BackColor = Color.LightGreen;
             }
         }
     }
